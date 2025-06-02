@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SoftwareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,19 +18,16 @@ use App\Http\Controllers\ItemController;
 |
 */
 
-
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('logins');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [ItemController::class, 'Index'])->name('admin.dashboard');
-    Route::get('/items', [ItemController::class, 'getItem'])->name('admin.items');
-    Route::get('/category', [ItemController::class, 'getCategory'])->name('admin.category');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::prefix('user')->middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('user.dashboard');
+    Route::resources([
+        'assets' => AssetController::class,
+        'software' => SoftwareController::class,
+        'categories' => CategoryController::class,
+    ]);
 });

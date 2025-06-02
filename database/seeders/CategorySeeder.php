@@ -13,24 +13,51 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create([
-            'category_name' => 'Electronics',
-            'description' => 'Electronic items',
-        ]);
+        $categories = [
+            [
+                'name' => 'Laptops',
+                'description' => 'Portable computers for work and development',
+                'type' => 'hardware',
+            ],
+            [
+                'name' => 'Desktop Computers',
+                'description' => 'Workstation computers for office use',
+                'type' => 'hardware',
+            ],
+            [
+                'name' => 'Monitors',
+                'description' => 'Display screens for computers',
+                'type' => 'hardware',
+            ],
+            [
+                'name' => 'Software Licenses',
+                'description' => 'Software application licenses',
+                'type' => 'license',
+            ],
+            [
+                'name' => 'Mobile Devices',
+                'description' => 'Smartphones and tablets',
+                'type' => 'hardware',
+            ],
+            [
+                'name' => 'Network Equipment',
+                'description' => 'Routers, switches, and networking hardware',
+                'type' => 'hardware',
+            ],
+            [
+                'name' => 'Peripherals',
+                'description' => 'Keyboards, mice, and other computer accessories',
+                'type' => 'accessory',
+            ],
+            [
+                'name' => 'Office Equipment',
+                'description' => 'Printers, scanners, and other office hardware',
+                'type' => 'hardware',
+            ],
+        ];
 
-        Category::create([
-            'category_name' => 'Automotive',
-            'description' => 'Automotive items',
-        ]);
-
-        Category::create([
-            'category_name' => 'Laptop',
-            'description' => 'Laptop items',
-        ]);
-
-        Category::create([
-            'category_name' => 'Handphone',
-            'description' => 'Handphone items',
-        ]);
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
