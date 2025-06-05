@@ -27,14 +27,23 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resources([
-        'assets' => AssetController::class,
-        'software' => SoftwareController::class,
-        'categories' => CategoryController::class,
-    ]);
+    // Assets routes with permissions
+    Route::middleware(['permission:manage-assets'])->group(function () {
+        Route::resource('assets', AssetController::class);
+    });
 
-    // Settings Routes
-    Route::prefix('settings')->group(function () {
+    // Software routes with permissions
+    Route::middleware(['permission:manage-software'])->group(function () {
+        Route::resource('software', SoftwareController::class);
+    });
+
+    // Categories routes with permissions
+    Route::middleware(['permission:manage-categories'])->group(function () {
+        Route::resource('categories', CategoryController::class);
+    });
+
+    // Settings Routes with permissions
+    Route::middleware(['permission:manage-settings'])->prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::get('/general', [SettingsController::class, 'general'])->name('settings.general');
         Route::get('/customizations', [SettingsController::class, 'customizations'])->name('settings.customizations');
@@ -46,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// Admin only routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
