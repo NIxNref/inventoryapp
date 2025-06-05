@@ -15,7 +15,9 @@ class SoftwareController extends Controller
     {
         $software = Asset::whereHas('category', function ($query) {
             $query->where('type', 'license');
-        })->with(['category', 'owner'])->paginate(10);
+        })->with(['category', 'owner'])
+          ->orderBy('inventory_id')
+          ->paginate(10);
 
         return view('software.index', compact('software'));
     }

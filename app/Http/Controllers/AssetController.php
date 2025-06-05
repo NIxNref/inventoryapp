@@ -13,7 +13,9 @@ class AssetController extends Controller
     {
         $assets = Asset::whereHas('category', function ($query) {
             $query->whereIn('type', ['hardware', 'accessory']);
-        })->with(['category', 'owner'])->paginate(10);
+        })->with(['category', 'owner'])
+          ->orderBy('inventory_id')
+          ->paginate(10);
 
         return view('assets.index', compact('assets'));
     }
