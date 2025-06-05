@@ -36,7 +36,7 @@ class AuthController extends Controller
 
             return redirect()->route('dashboard')
                 ->with('success', 'Welcome back!');
-        }
+            }
 
         Log::warning('Failed login attempt', ['email' => $request->email]);
         
@@ -53,7 +53,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Log::info('User logged out.', ['id' => Auth::id()]);
-        
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

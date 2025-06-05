@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AssetController extends Controller
@@ -12,7 +13,7 @@ class AssetController extends Controller
     {
         $assets = Asset::whereHas('category', function ($query) {
             $query->whereIn('type', ['hardware', 'accessory']);
-        })->with('category')->paginate(10);
+        })->with(['category', 'owner'])->paginate(10);
 
         return view('assets.index', compact('assets'));
     }
@@ -20,15 +21,17 @@ class AssetController extends Controller
     public function create()
     {
         $categories = Category::whereIn('type', ['hardware', 'accessory'])->get();
-        return view('assets.create', compact('categories'));
+        $users = User::where('is_deleted', 0)->get();
+        return view('assets.create', compact('categories', 'users'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'asset_tag' => 'required|string|max:255|unique:assets',
+            'inventory_id' => 'required|string|max:255|unique:assets',
             'category_id' => 'required|exists:categories,id',
+            'owner_id' => 'required|exists:users,id',
             'serial_number' => 'nullable|string|max:255',
             'model' => 'nullable|string|max:255',
             'status' => 'required|in:available,in_use,maintenance',
@@ -55,15 +58,17 @@ class AssetController extends Controller
     public function edit(Asset $asset)
     {
         $categories = Category::whereIn('type', ['hardware', 'accessory'])->get();
-        return view('assets.edit', compact('asset', 'categories'));
+        $users = User::where('is_deleted', 0)->get();
+        return view('assets.edit', compact('asset', 'categories', 'users'));
     }
 
     public function update(Request $request, Asset $asset)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'asset_tag' => 'required|string|max:255|unique:assets,asset_tag,' . $asset->id,
+            'inventory_id' => 'required|string|max:255|unique:assets,inventory_id,' . $asset->id,
             'category_id' => 'required|exists:categories,id',
+            'owner_id' => 'required|exists:users,id',
             'serial_number' => 'nullable|string|max:255',
             'model' => 'nullable|string|max:255',
             'status' => 'required|in:available,in_use,maintenance',

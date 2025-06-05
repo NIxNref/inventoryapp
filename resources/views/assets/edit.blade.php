@@ -31,11 +31,12 @@
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="asset_tag" class="block text-sm font-medium text-gray-700">Asset Tag</label>
-                                <input type="text" name="asset_tag" id="asset_tag"
-                                    value="{{ old('asset_tag', $asset->asset_tag) }}" required
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('asset_tag')
+                                <label for="inventory_id" class="block text-sm font-medium text-gray-700">Inventory
+                                    ID</label>
+                                <input type="text" name="inventory_id" id="inventory_id"
+                                    value="{{ old('inventory_id', $asset->inventory_id) }}" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @error('inventory_id')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -54,6 +55,23 @@
                                     @endforeach
                                 </select>
                                 @error('category_id')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="owner_id" class="block text-sm font-medium text-gray-700">Owner</label>
+                                <select name="owner_id" id="owner_id" required
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="">Select an owner</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            {{ old('owner_id', $asset->owner_id) == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('owner_id')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

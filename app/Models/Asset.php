@@ -11,15 +11,17 @@ class Asset extends Model
 
     protected $fillable = [
         'name',
-        'asset_tag',
+        'inventory_id',
         'serial_number',
         'model',
         'status',
         'category_id',
+        'owner_id',
         'location',
         'purchase_date',
         'purchase_cost',
         'warranty_expires',
+        'expiry_date',
         'notes',
         'assigned_to',
         'manufacturer',
@@ -29,6 +31,7 @@ class Asset extends Model
     protected $casts = [
         'purchase_date' => 'date',
         'warranty_expires' => 'date',
+        'expiry_date' => 'date',
     ];
 
     public function category()
@@ -39,5 +42,10 @@ class Asset extends Model
     public function assignedTo()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 } 

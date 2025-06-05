@@ -27,7 +27,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Monitors',
                 'description' => 'Display screens for computers',
-                'type' => 'hardware',
+            'type' => 'hardware',
             ],
             [
                 'name' => 'Software Licenses',
@@ -37,12 +37,12 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Mobile Devices',
                 'description' => 'Smartphones and tablets',
-                'type' => 'hardware',
+            'type' => 'hardware',
             ],
             [
                 'name' => 'Network Equipment',
                 'description' => 'Routers, switches, and networking hardware',
-                'type' => 'hardware',
+            'type' => 'hardware',
             ],
             [
                 'name' => 'Peripherals',
@@ -52,7 +52,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Office Equipment',
                 'description' => 'Printers, scanners, and other office hardware',
-                'type' => 'hardware',
+            'type' => 'hardware',
             ],
         ];
 

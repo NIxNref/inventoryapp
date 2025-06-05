@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SoftwareController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/maintenance', [SettingsController::class, 'maintenance'])->name('settings.maintenance');
         Route::get('/system-logs', [SettingsController::class, 'systemLogs'])->name('settings.system-logs');
     });
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
 });

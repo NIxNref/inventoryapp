@@ -1,6 +1,19 @@
 <x-app-layout>
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if (session('success'))
+                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                    role="alert">
+                    <span class="block sm:inline">{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{ session('error') }}</span>
+                </div>
+            @endif
+
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-semibold text-gray-900">Software Licenses</h2>
                 <a href="{{ route('software.create') }}"
@@ -29,7 +42,7 @@
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status
                                         </th>
                                         <th scope="col"
-                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Owner
                                         </th>
                                         <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Expiry
@@ -52,14 +65,19 @@
                                                 {{ $license->category->name }}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                 <span
-                                                    class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 {{ $license->status === 'available' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                                    {{ $license->status }}
+                                                    class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+                                                    {{ $license->status === 'available'
+                                                        ? 'bg-green-100 text-green-800'
+                                                        : ($license->status === 'expired'
+                                                            ? 'bg-red-100 text-red-800'
+                                                            : 'bg-yellow-100 text-yellow-800') }}">
+                                                    {{ ucfirst($license->status) }}
                                                 </span>
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {{ $license->location }}</td>
+                                                {{ $license->owner->name }}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                {{ $license->warranty_expires ? $license->warranty_expires->format('Y-m-d') : 'N/A' }}
+                                                {{ $license->expiry_date ? $license->expiry_date->format('Y-m-d') : 'N/A' }}
                                             </td>
                                             <td
                                                 class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
