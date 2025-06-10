@@ -104,7 +104,26 @@
                 </div>
             </div>
 
-            <!-- Hardware Assets Section -->
+            <!-- Hardware Assets Section -->            <!-- Charts Section -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Assets by Category Chart -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Assets by Category</h3>
+                    <div class="relative" style="height: 300px;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Assets by Status Chart -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Assets by Status</h3>
+                    <div class="relative" style="height: 300px;">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Tables Section -->
             <div class="mt-8">
                 <h3 class="text-lg font-medium text-gray-900">Hardware Assets</h3>
                 <div class="mt-4 flex flex-col">
@@ -223,6 +242,71 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>    </div>
+
+    <script>
+        // Prepare data for category chart
+        const categoryData = {
+            labels: {!! json_encode($hardwareAssets->concat($softwareAssets)->groupBy('category.name')->keys()) !!},
+            datasets: [{
+                data: {!! json_encode($hardwareAssets->concat($softwareAssets)->groupBy('category.name')->map->count()->values()) !!},
+                backgroundColor: [
+                    '#4F46E5', // Indigo
+                    '#818CF8', // Light Indigo
+                    '#C7D2FE', // Lighter Indigo
+                    '#60A5FA', // Blue
+                    '#93C5FD', // Light Blue
+                    '#3B82F6', // Mid Blue
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 2
+            }]
+        };
+
+        // Prepare data for status chart
+        const statusData = {
+            labels: {!! json_encode($hardwareAssets->concat($softwareAssets)->groupBy('status')->keys()) !!},
+            datasets: [{
+                data: {!! json_encode($hardwareAssets->concat($softwareAssets)->groupBy('status')->map->count()->values()) !!},
+                backgroundColor: [
+                    '#22C55E', // Green for available
+                    '#EAB308', // Yellow for in_use
+                    '#EF4444', // Red for maintenance
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 2
+            }]
+        };
+
+        // Chart options
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        padding: 20,
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            }
+        };
+
+        // Create category chart
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'pie',
+            data: categoryData,
+            options: chartOptions
+        });
+
+        // Create status chart
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: statusData,
+            options: chartOptions
+        });
+    </script>
 </x-app-layout>

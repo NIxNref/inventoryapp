@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main box shape -->
+    <path d="M96 128L256 64l160 64v256l-160 64L96 384V128z" stroke="#FFFFFF" stroke-width="32" stroke-linejoin="round"/>
+    <!-- Front face lines -->
+    <path d="M96 128l160 64 160-64M256 192v192" stroke="#FFFFFF" stroke-width="32" stroke-linejoin="round"/>
+    <!-- Additional design elements -->
+    <path d="M176 160l32-12M304 160l-32-12" stroke="#E5E7EB" stroke-width="16" stroke-linecap="round"/>
+    <!-- Inner shelves -->
+    <path d="M144 256h224M144 320h224" stroke="#E5E7EB" stroke-width="16" stroke-linecap="round"/>
+</svg>

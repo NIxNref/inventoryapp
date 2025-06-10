@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     // Categories routes with permissions
     Route::middleware(['permission:manage-categories'])->group(function () {
         Route::resource('categories', CategoryController::class);
-    });
+});
 
     // Settings Routes with permissions
     Route::middleware(['permission:manage-settings'])->prefix('settings')->group(function () {
