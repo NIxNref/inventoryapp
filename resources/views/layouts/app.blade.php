@@ -22,7 +22,7 @@
         @if (!request()->routeIs('login'))
             <div class="w-64 bg-[#2A2D3E] text-white">
                 <div class="h-16 flex items-center justify-center border-b border-gray-700">
-                    <img src="/images/logo.svg" alt="Logo" class="h-12 w-12 mr-3" />
+                    <img src="/images/icons/logo.svg" alt="Logo" class="h-12 w-12 mr-3" />
                     <span class="text-xl font-bold">Inventory Management</span>
                 </div>
                 <nav class="mt-5">

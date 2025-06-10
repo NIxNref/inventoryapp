@@ -75,7 +75,7 @@
                         <div class="p-6">
                             <div class="flex items-start">
                                 <div class="flex-shrink-0">
-                                    <img class="h-12 w-12 rounded" src="{{ asset('images/zapier-icon.png') }}"
+                                    <img class="h-12 w-12 rounded" src="{{ asset('images/icons/zapier-icon.png') }}"
                                         alt="Zapier">
                                 </div>
                                 <div class="ml-4 flex-1">
