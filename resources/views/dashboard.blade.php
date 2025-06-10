@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <!-- Hardware Assets Section -->            <!-- Charts Section -->
+            <!-- Hardware Assets Section --> <!-- Charts Section -->
             <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Assets by Category Chart -->
                 <div class="bg-white p-6 rounded-lg shadow">
@@ -242,7 +242,8 @@
                     </div>
                 </div>
             </div>
-        </div>    </div>
+        </div>
+    </div>
 
     <script>
         // Prepare data for category chart
